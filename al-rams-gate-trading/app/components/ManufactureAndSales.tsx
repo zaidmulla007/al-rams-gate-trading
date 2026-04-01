@@ -191,7 +191,7 @@ export default function ManufactureAndSales() {
               <p className="text-cream/50 text-xs leading-relaxed">{item.description}</p>
               {/* Arrow connector (not on last) */}
               {i < processFlow.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
+                <div className="hidden md:flex absolute top-1/2 -right-4 transform -translate-y-1/2 translate-x-1/2 z-10 w-6 h-6 items-center justify-center">
                   <svg className="w-6 h-6 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>

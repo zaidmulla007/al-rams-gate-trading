@@ -29,17 +29,21 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-40">
         {/* Announcement Bar - hides on scroll */}
         <div
-          className={`bg-gold text-navy-dark text-center text-xs sm:text-sm font-semibold px-4 overflow-hidden transition-all duration-500 ${
+          className={`bg-gold text-navy-dark text-center text-xs sm:text-sm font-semibold overflow-hidden transition-all duration-500 ${
             scrolled ? "h-0 py-0" : "h-auto py-2"
           }`}
         >
           <div className="overflow-hidden whitespace-nowrap">
             <motion.div
-              animate={{ x: ["100%", "-100%"] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="inline-block"
+              className="inline-flex"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             >
-              Best Wearings For Men &nbsp;&bull;&nbsp; Premium Kandura Manufacturing & Sales &nbsp;&bull;&nbsp; Visit Our Stores in Naif Souq, Dubai &nbsp;&bull;&nbsp; Best Wearings For Men &nbsp;&bull;&nbsp; Premium Kandura Manufacturing & Sales
+              {[0, 1].map((copy) => (
+                <span key={copy} className="inline-block px-2">
+                  Best Wearings For Men &nbsp;&bull;&nbsp; Premium Kandura Manufacturing &amp; Sales &nbsp;&bull;&nbsp; Visit Our Stores in Naif Souq, Dubai &nbsp;&bull;&nbsp; Best Wearings For Men &nbsp;&bull;&nbsp; Premium Kandura Manufacturing &amp; Sales &nbsp;&bull;&nbsp;
+                </span>
+              ))}
             </motion.div>
           </div>
         </div>

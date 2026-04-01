@@ -1,57 +1,194 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-navy pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 opacity-[0.08]">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `repeating-linear-gradient(
-              45deg,
-              transparent,
-              transparent 35px,
-              rgba(201, 168, 76, 0.1) 35px,
-              rgba(201, 168, 76, 0.1) 36px
-            )`,
+            backgroundImage:
+              "linear-gradient(var(--gold) 1px, transparent 1px), linear-gradient(90deg, var(--gold) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
           }}
         />
       </div>
 
-      {/* Decorative Gold Elements */}
+      {/* Large pulsing glow orbs for depth */}
       <motion.div
-        className="absolute top-20 left-10 w-72 h-72 rounded-full opacity-5"
-        style={{ background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.08, 0.05] }}
-        transition={{ duration: 6, repeat: Infinity }}
+        className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full"
+        style={{ background: "radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%)" }}
+        animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-20 right-10 w-96 h-96 rounded-full opacity-5"
-        style={{ background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)" }}
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.05, 0.1, 0.05] }}
-        transition={{ duration: 8, repeat: Infinity }}
+        className="absolute -bottom-40 -right-40 w-[600px] h-[600px] rounded-full"
+        style={{ background: "radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%)" }}
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full"
+        style={{ background: "radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 60%)" }}
+        animate={{ scale: [1, 1.4, 1], x: [0, 30, 0], y: [0, -20, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Geometric Islamic Pattern - Left */}
-      <div className="absolute left-0 top-1/4 w-16 sm:w-24 md:w-32 h-32 sm:h-48 md:h-64 opacity-10">
-        <svg viewBox="0 0 100 200" fill="none" className="w-full h-full">
-          <path d="M50 0 L100 50 L50 100 L0 50 Z" stroke="var(--gold)" strokeWidth="0.5" />
-          <path d="M50 50 L100 100 L50 150 L0 100 Z" stroke="var(--gold)" strokeWidth="0.5" />
-          <path d="M50 100 L100 150 L50 200 L0 150 Z" stroke="var(--gold)" strokeWidth="0.5" />
-        </svg>
+      {/* 3D Rotating diamond - top left */}
+      <motion.div
+        className="absolute top-[15%] left-[8%] hidden md:block"
+        style={{ perspective: "600px" }}
+      >
+        <motion.div
+          className="w-20 h-20 lg:w-28 lg:h-28 border border-gold/35"
+          style={{ transformStyle: "preserve-3d" }}
+          animate={{ rotateX: [0, 360], rotateY: [0, 360] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+      </motion.div>
+
+      {/* 3D Rotating diamond - bottom right */}
+      <motion.div
+        className="absolute bottom-[20%] right-[10%] hidden md:block"
+        style={{ perspective: "600px" }}
+      >
+        <motion.div
+          className="w-16 h-16 lg:w-24 lg:h-24 border border-gold/30"
+          style={{ transformStyle: "preserve-3d" }}
+          animate={{ rotateX: [360, 0], rotateZ: [0, 360] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        />
+      </motion.div>
+
+      {/* 3D Rotating octagon - center right */}
+      <motion.div
+        className="absolute top-[40%] right-[5%] hidden lg:block"
+        style={{ perspective: "800px" }}
+      >
+        <motion.svg
+          viewBox="0 0 100 100"
+          className="w-32 h-32 xl:w-40 xl:h-40"
+          style={{ transformStyle: "preserve-3d" }}
+          animate={{ rotateY: [0, 360], rotateX: [0, 180, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        >
+          <polygon
+            points="30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30"
+            fill="none"
+            stroke="var(--gold)"
+            strokeWidth="0.5"
+            opacity="0.3"
+          />
+          <polygon
+            points="38,15 62,15 82,38 82,62 62,82 38,82 18,62 18,38"
+            fill="none"
+            stroke="var(--gold)"
+            strokeWidth="0.5"
+            opacity="0.2"
+          />
+        </motion.svg>
+      </motion.div>
+
+      {/* Floating Islamic star - left */}
+      <motion.div
+        className="absolute top-[30%] left-[3%] hidden md:block"
+        style={{ perspective: "500px" }}
+      >
+        <motion.svg
+          viewBox="0 0 100 100"
+          className="w-20 h-20 lg:w-28 lg:h-28"
+          style={{ transformStyle: "preserve-3d" }}
+          animate={{
+            rotateY: [0, 360],
+            y: [0, -15, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        >
+          <polygon
+            points="50,5 61,35 95,35 68,57 79,90 50,70 21,90 32,57 5,35 39,35"
+            fill="none"
+            stroke="var(--gold)"
+            strokeWidth="0.8"
+            opacity="0.25"
+          />
+        </motion.svg>
+      </motion.div>
+
+      {/* Floating particles */}
+      {[
+        { top: "12%", left: "20%", size: 3, delay: 0, duration: 6 },
+        { top: "25%", left: "75%", size: 2, delay: 1, duration: 8 },
+        { top: "60%", left: "15%", size: 2.5, delay: 2, duration: 7 },
+        { top: "70%", left: "80%", size: 3, delay: 0.5, duration: 9 },
+        { top: "45%", left: "90%", size: 2, delay: 3, duration: 6 },
+        { top: "80%", left: "35%", size: 2, delay: 1.5, duration: 8 },
+        { top: "15%", left: "55%", size: 1.5, delay: 2.5, duration: 7 },
+        { top: "55%", left: "5%", size: 2, delay: 0.8, duration: 10 },
+      ].map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute hidden sm:block rounded-full bg-gold"
+          style={{ top: p.top, left: p.left, width: p.size, height: p.size }}
+          animate={{
+            y: [0, -30, 0],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration: p.duration,
+            repeat: Infinity,
+            delay: p.delay,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Horizontal light streaks */}
+      <motion.div
+        className="absolute top-[25%] left-0 w-full h-px hidden md:block"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)" }}
+        animate={{ x: ["-100%", "100%"] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute top-[65%] left-0 w-full h-px hidden md:block"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.14), transparent)" }}
+        animate={{ x: ["100%", "-100%"] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Corner geometric accents */}
+      <div className="absolute top-24 left-4 sm:left-8 md:left-12 opacity-[0.18]">
+        <motion.svg
+          viewBox="0 0 120 120"
+          className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        >
+          <circle cx="60" cy="60" r="55" fill="none" stroke="var(--gold)" strokeWidth="0.5" />
+          <circle cx="60" cy="60" r="40" fill="none" stroke="var(--gold)" strokeWidth="0.3" />
+          <circle cx="60" cy="60" r="25" fill="none" stroke="var(--gold)" strokeWidth="0.3" />
+          <line x1="60" y1="5" x2="60" y2="115" stroke="var(--gold)" strokeWidth="0.3" />
+          <line x1="5" y1="60" x2="115" y2="60" stroke="var(--gold)" strokeWidth="0.3" />
+          <line x1="18" y1="18" x2="102" y2="102" stroke="var(--gold)" strokeWidth="0.3" />
+          <line x1="102" y1="18" x2="18" y2="102" stroke="var(--gold)" strokeWidth="0.3" />
+        </motion.svg>
       </div>
 
-      {/* Geometric Islamic Pattern - Right */}
-      <div className="absolute right-0 top-1/3 w-16 sm:w-24 md:w-32 h-32 sm:h-48 md:h-64 opacity-10">
-        <svg viewBox="0 0 100 200" fill="none" className="w-full h-full">
-          <path d="M50 0 L100 50 L50 100 L0 50 Z" stroke="var(--gold)" strokeWidth="0.5" />
-          <path d="M50 50 L100 100 L50 150 L0 100 Z" stroke="var(--gold)" strokeWidth="0.5" />
-          <path d="M50 100 L100 150 L50 200 L0 150 Z" stroke="var(--gold)" strokeWidth="0.5" />
-        </svg>
+      <div className="absolute bottom-24 right-4 sm:right-8 md:right-12 opacity-[0.18]">
+        <motion.svg
+          viewBox="0 0 120 120"
+          className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+        >
+          <rect x="10" y="10" width="100" height="100" fill="none" stroke="var(--gold)" strokeWidth="0.5" />
+          <rect x="25" y="25" width="70" height="70" fill="none" stroke="var(--gold)" strokeWidth="0.3" transform="rotate(15 60 60)" />
+          <rect x="35" y="35" width="50" height="50" fill="none" stroke="var(--gold)" strokeWidth="0.3" transform="rotate(30 60 60)" />
+          <rect x="42" y="42" width="36" height="36" fill="none" stroke="var(--gold)" strokeWidth="0.3" transform="rotate(45 60 60)" />
+        </motion.svg>
       </div>
 
       {/* Main Content */}
