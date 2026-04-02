@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Product Catalog — Al Rams Gate Trading</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0a1628;
+  --surface:#111d35;
+  --surface2:#162544;
+  --border:#1e3050;
+  --accent:#c9a84c;
+  --accent-light:#d4b96a;
+  --accent-dark:#a8893d;
+  --cream:#f5f0e8;
+  --text:#f5f0e8;
+  --muted:#7a8a9e;
+  --card-hover:#152a4a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* HERO */
+.hero{
+  padding:60px 40px 50px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-100px; right:-100px;
+  width:500px; height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  bottom:-80px; left:-80px;
+  width:400px; height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-label{
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:12px;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(32px,5.5vw,68px);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-0.5px;
+  margin-bottom:16px;
+}
+.hero-title span{color:var(--accent);}
+.hero-sub{
+  color:var(--muted);
+  font-weight:300;
+  font-size:16px;
+  max-width:560px;
+  margin-bottom:32px;
+}
+.stats-row{
+  display:flex;
+  gap:32px;
+  flex-wrap:wrap;
+}
+.stat{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  font-weight:700;
+  color:var(--accent);
+  line-height:1;
+}
+.stat-lbl{
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+/* CONTROLS */
+.controls{
+  padding:24px 40px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(10,22,40,0.95);
+  backdrop-filter:blur(12px);
+}
+.search-wrap{
+  flex:1;
+  min-width:200px;
+  position:relative;
+}
+.search-icon{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:14px;
+}
+.search-bar{
+  width:100%;
+  padding:10px 14px 10px 38px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  outline:none;
+  transition:border-color 0.2s;
+}
+.search-bar:focus{border-color:var(--accent);}
+.search-bar::placeholder{color:var(--muted);}
+.filter-tabs{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.tab{
+  padding:8px 14px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+  font-family:'Inter',sans-serif;
+  font-size:12px;
+  font-weight:500;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.tab:hover{border-color:var(--accent);color:var(--accent);}
+.tab.active{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600;}
+.expand-btn{
+  padding:10px 16px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+  font-family:'Inter',sans-serif;
+  font-size:12px;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+.expand-btn:hover{border-color:var(--text);color:var(--text);}
+
+/* GRID */
+.grid{
+  padding:32px 40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+  gap:16px;
+}
+
+/* CATEGORY CARD */
+.brand-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  transition:border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+.brand-card:hover{
+  border-color:rgba(201,168,76,0.4);
+  background:var(--card-hover);
+  box-shadow:0 4px 24px rgba(201,168,76,0.06);
+}
+.brand-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 20px;
+  cursor:pointer;
+  user-select:none;
+  gap:12px;
+}
+.brand-left{display:flex;align-items:center;gap:12px;}
+.brand-icon{
+  width:44px;height:44px;
+  border-radius:10px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  flex-shrink:0;
+}
+.brand-info{display:flex;flex-direction:column;gap:2px;}
+.brand-name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:17px;
+  letter-spacing:0.3px;
+  color:var(--text);
+}
+.brand-meta{
+  font-size:11px;
+  color:var(--muted);
+  display:flex;gap:8px;
+}
+.brand-meta span{
+  background:var(--surface2);
+  padding:2px 7px;
+  border-radius:4px;
+  border:1px solid var(--border);
+}
+.chevron{
+  color:var(--muted);
+  font-size:18px;
+  transition:transform 0.3s;
+  flex-shrink:0;
+}
+.brand-card.open .chevron{transform:rotate(180deg);}
+.brand-card.open .brand-header{border-bottom:1px solid var(--border);}
+
+/* BODY */
+.brand-body{
+  display:none;
+  padding:16px 20px;
+}
+.brand-card.open .brand-body{display:block;}
+
+.cat-block{margin-bottom:16px;}
+.cat-block:last-child{margin-bottom:0;}
+.cat-title{
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--accent);
+  margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;
+}
+.cat-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+.sub-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.sub-pill{
+  font-size:12px;
+  padding:5px 12px;
+  border-radius:20px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:#a8b5c8;
+  transition:all 0.2s;
+  cursor:default;
+}
+.sub-pill:hover{
+  background:rgba(201,168,76,0.12);
+  border-color:rgba(201,168,76,0.5);
+  color:var(--accent);
+}
+
+/* SECTOR TAGS */
+.sector-tag{
+  display:inline-block;
+  font-size:10px;
+  padding:2px 8px;
+  border-radius:4px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-left:6px;
+}
+.sector-emirati{background:rgba(201,168,76,0.18);color:#d4b96a;}
+.sector-omani{background:rgba(80,200,160,0.15);color:#50c8a0;}
+.sector-saudi{background:rgba(120,140,255,0.15);color:#8899ff;}
+.sector-moroccan{background:rgba(220,120,80,0.15);color:#dc8860;}
+.sector-kids{background:rgba(255,160,200,0.15);color:#ffa0c8;}
+.sector-accessories{background:rgba(180,160,220,0.15);color:#b4a0dc;}
+.sector-women{background:rgba(255,200,100,0.15);color:#ffc864;}
+.sector-custom{background:rgba(100,220,220,0.15);color:#64dcdc;}
+
+/* NO RESULTS */
+.no-results{
+  grid-column:1/-1;
+  text-align:center;
+  padding:60px 20px;
+  color:var(--muted);
+}
+.no-results-icon{font-size:40px;margin-bottom:12px;}
+
+/* FOOTER */
+.footer{
+  padding:32px 40px;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  color:var(--muted);
+  font-size:13px;
+}
+.footer a{color:var(--accent);text-decoration:none;}
+.footer a:hover{text-decoration:underline;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent-dark);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+
+@media(max-width:600px){
+  .hero{padding:40px 20px 32px;}
+  .controls{padding:16px 20px;}
+  .grid{padding:20px;grid-template-columns:1fr;}
+  .footer{padding:24px 20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">Complete Product Catalog</div>
+  <h1 class="hero-title">Al Rams Gate<br/><span>Trading</span></h1>
+  <p class="hero-sub">Premium kandura manufacturer &amp; retailer — comprehensive collection of Emirati, Omani, Saudi &amp; Moroccan kanduras for men &amp; children. Located in Naif Souq, Dubai.</p>
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num" id="totalColl">0</span><span class="stat-lbl">Collections</span></div>
+    <div class="stat"><span class="stat-num" id="totalCats">0</span><span class="stat-lbl">Categories</span></div>
+    <div class="stat"><span class="stat-num" id="totalProds">0</span><span class="stat-lbl">Products</span></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">&#x2315;</span>
+    <input class="search-bar" id="searchInput" placeholder="Search collection, category or product..." autocomplete="off"/>
+  </div>
+  <div class="filter-tabs" id="filterTabs">
+    <button class="tab active" data-sector="all">All</button>
+    <button class="tab" data-sector="emirati">Emirati</button>
+    <button class="tab" data-sector="omani">Omani</button>
+    <button class="tab" data-sector="saudi">Saudi</button>
+    <button class="tab" data-sector="moroccan">Moroccan</button>
+    <button class="tab" data-sector="kids">Kids</button>
+    <button class="tab" data-sector="accessories">Accessories</button>
+    <button class="tab" data-sector="women">Women</button>
+    <button class="tab" data-sector="custom">Custom</button>
+  </div>
+  <button class="expand-btn" id="expandAll">Expand All</button>
+</div>
+
+<div class="grid" id="brandGrid"></div>
+
+<div class="footer">
+  <span>Al Rams Gate Trading &mdash; Product Catalog &bull; Naif Souq, Dubai</span>
+  <span id="visibleCount">0 collections shown</span>
+</div>
+
+<script>
+const collections = [
+  {
+    name:'Emirati Kandura — Men\'s Classic',
+    icon:'&#9670;',
+    sector:'emirati',
+    categories:[
+      {cat:'Classic White Collection',subs:['Royal White Kandura','Pearl White Kandura','Ivory White Kandura','Snow White Kandura','Diamond White Kandura','Platinum White Kandura']},
+      {cat:'Premium Colors',subs:['Midnight Navy Kandura','Charcoal Black Kandura','Desert Taupe Kandura','Silver Grey Kandura','Ash Brown Kandura','Smoke Grey Kandura']},
+      {cat:'Signature Colors',subs:['Sky Blue Kandura','Baby Blue Kandura','Royal Blue Kandura','Emerald Green Kandura','Blush Pink Kandura','Lavender Kandura','Beige Kandura']},
+      {cat:'Fabric Variants',subs:['Japanese Cotton Kandura','Premium Wash & Wear','Luxury Lightweight','Royale Fabric','Summer Breathable','Winter Weight Cotton']},
+    ]
+  },
+  {
+    name:'Emirati Kandura — Premium & Royale',
+    icon:'&#9830;',
+    sector:'emirati',
+    categories:[
+      {cat:'Royale Collection',subs:['Royale White Kandura','Royale Greige Kandura','Royale Ash Brown Kandura','Royale Khaloud Grey Kandura','Royale Copper Kandura','Royale Deep Blue Kandura']},
+      {cat:'Executive Collection',subs:['Executive White','Executive Navy','Executive Black','Executive Grey','Executive Ivory']},
+      {cat:'VIP Custom Range',subs:['Hand-Finished White','Monogrammed Kandura','Double-Cuff Kandura','French-Cuff Kandura','Contrast-Stitch Kandura']},
+    ]
+  },
+  {
+    name:'Emirati Kandura — Designer',
+    icon:'&#10022;',
+    sector:'emirati',
+    categories:[
+      {cat:'Embroidered Collar',subs:['Gold Thread Collar Kandura','Silver Thread Collar Kandura','Contrast Collar Kandura','Al Dahab Embroidered Kandura','Tuxedo Collar Kandura']},
+      {cat:'Modern Cuts',subs:['Slim Fit Kandura','Tailored Fit Kandura','Regular Fit Kandura','Relaxed Fit Kandura']},
+      {cat:'Half Sleeve',subs:['Half Sleeve White','Half Sleeve Navy','Half Sleeve Grey','Half Sleeve Beige','Half Sleeve Black']},
+    ]
+  },
+  {
+    name:'Omani Dishdasha — Men\'s',
+    icon:'&#9788;',
+    sector:'omani',
+    categories:[
+      {cat:'Classic Omani',subs:['White Omani Dishdasha','Off-White Omani','Cream Omani','Ivory Omani Dishdasha']},
+      {cat:'Premium Omani',subs:['Black & Gold Omani','Navy & Silver Omani','Maroon Omani','Forest Green Omani','Triple Black Omani','Triple White Omani']},
+      {cat:'Haya Collection (Japanese Cotton)',subs:['Haya White Omani — Gold Trim','Haya White Omani — Forest Green Trim','Haya White Omani — Baby Blue Trim','Haya White Omani — Silver Trim']},
+      {cat:'Embroidered Omani',subs:['Gold Embroidered Neckline','Silver Embroidered Neckline','Contrast Embroidered Collar','Floral Embroidered Omani','Geometric Embroidered Omani']},
+      {cat:'Omani Color Range',subs:['Baby Blue Omani','Royal Blue Omani','Grey Omani','Taupe Omani','Black Omani','Brown Omani']},
+    ]
+  },
+  {
+    name:'Saudi Thobe — Men\'s',
+    icon:'&#9733;',
+    sector:'saudi',
+    categories:[
+      {cat:'Classic Saudi',subs:['Classic White Saudi Thobe','Off-White Saudi Thobe','Cream Saudi Thobe']},
+      {cat:'Saudi Collar Styles',subs:['Mandarin Collar Thobe','Band Collar Thobe','Classic Collar Thobe','Nehru Collar Thobe','Saudi Collar — Grey Royale','Saudi Collar — White Premium']},
+      {cat:'Premium Saudi Colors',subs:['Black Saudi Thobe','Navy Blue Saudi Thobe','Charcoal Saudi Thobe','Brown Saudi Thobe','Beige Saudi Thobe','Grey Saudi Thobe']},
+      {cat:'Saudi Business & Formal',subs:['Business White Thobe','Business Grey Thobe','Formal Black Thobe','Formal Navy Thobe','Wedding White Thobe']},
+    ]
+  },
+  {
+    name:'Moroccan Thobe — Men\'s',
+    icon:'&#10040;',
+    sector:'moroccan',
+    categories:[
+      {cat:'Gandoura (Short Sleeve)',subs:['White Gandoura','Black Gandoura','Navy Gandoura','Brown Gandoura','Beige Gandoura','Desert Gold Gandoura']},
+      {cat:'Djellaba (Hooded)',subs:['Premium White Djellaba','Midnight Gold Djellaba','Obsidian Black Djellaba','Brown Ember Djellaba','Sky Blue Djellaba','Golden Dusk Djellaba','Black & Gold Djellaba']},
+      {cat:'Luxury Moroccan',subs:['Royal Lightweight Djellaba','Luxury Embroidered Djellaba','Silk-Blend Djellaba','Premium Linen Djellaba']},
+    ]
+  },
+  {
+    name:'Jubba Collection — Men\'s',
+    icon:'&#10047;',
+    sector:'emirati',
+    categories:[
+      {cat:'Emirati Style Jubba',subs:['Silver Emirati Jubba','Gold Emirati Jubba','White Emirati Jubba','Black Emirati Jubba']},
+      {cat:'Omani Style Jubba',subs:['Black & Gold Patterned Omani Jubba','Triple Black Omani Jubba','White Omani Jubba','Navy Omani Jubba']},
+      {cat:'Designer Jubba',subs:['Royal Blue Tuxedo Collar Jubba','Embroidered Collar Jubba','Paisley Collar Jubba','Contrast Panel Jubba']},
+    ]
+  },
+  {
+    name:'Bisht & Formal Cloaks',
+    icon:'&#9812;',
+    sector:'accessories',
+    categories:[
+      {cat:'Traditional Bisht',subs:['Black Bisht — Gold Trim','Black Bisht — Silver Trim','Brown Bisht — Gold Trim','Navy Bisht — Gold Trim','White Bisht — Gold Trim']},
+      {cat:'Premium Bisht',subs:['Royal Black Bisht','Luxury Wool Bisht','Wedding Bisht — Heavy Gold','Ceremonial Bisht','Custom Embroidered Bisht']},
+    ]
+  },
+  {
+    name:'Kids Emirati Kandura',
+    icon:'&#9786;',
+    sector:'kids',
+    categories:[
+      {cat:'Boys Classic White',subs:['Boys White Kandura','Boys Pearl White Kandura','Boys Ivory Kandura']},
+      {cat:'Boys Colors',subs:['Boys Navy Kandura','Boys Charcoal Black Kandura','Boys Desert Taupe Kandura','Boys Sky Blue Kandura','Boys Grey Kandura','Boys Beige Kandura']},
+      {cat:'Boys Premium',subs:['Boys Royale White Kandura','Boys Executive White Kandura','Boys Embroidered Collar Kandura']},
+      {cat:'Toddler Emirati',subs:['Toddler White Kandura','Toddler Ivory Kandura','Toddler Beige Kandura','Toddler Sky Blue Kandura']},
+    ]
+  },
+  {
+    name:'Kids Omani Dishdasha',
+    icon:'&#9786;',
+    sector:'kids',
+    categories:[
+      {cat:'Boys Omani',subs:['Boys White Omani Dishdasha','Boys Black & Gold Omani','Boys Navy Omani','Boys Cream Omani','Boys Grey Omani']},
+      {cat:'Boys Embroidered Omani',subs:['Boys Gold Embroidered Omani','Boys Silver Embroidered Omani','Boys Contrast Collar Omani']},
+      {cat:'Toddler & Baby Omani',subs:['Toddler White Omani','Toddler Black & Gold Omani','Baby Omani Romper — White','Baby Omani Romper — Cream']},
+    ]
+  },
+  {
+    name:'Kids Saudi & Moroccan',
+    icon:'&#9786;',
+    sector:'kids',
+    categories:[
+      {cat:'Boys Saudi Thobe',subs:['Boys White Saudi Thobe','Boys Cream Saudi Thobe','Boys Grey Saudi Thobe','Boys Navy Saudi Thobe']},
+      {cat:'Boys Moroccan',subs:['Boys White Gandoura','Boys Pearl White Gandoura','Boys Turquoise Mist Gandoura','Boys Silver Ash Gandoura','Boys Burgundy Gandoura','Boys Desert Gold Gandoura','Boys Midnight Gold Gandoura']},
+      {cat:'Boys Djellaba',subs:['Boys White Djellaba','Boys Navy Djellaba','Boys Brown Djellaba']},
+    ]
+  },
+  {
+    name:'Father & Son Matching Sets',
+    icon:'&#9829;',
+    sector:'kids',
+    categories:[
+      {cat:'Matching Emirati Sets',subs:['Father & Son White Kandura Set','Father & Son Navy Set','Father & Son Charcoal Set','Father & Son Beige Set']},
+      {cat:'Matching Omani Sets',subs:['Father & Son White Omani Set','Father & Son Black & Gold Omani Set']},
+      {cat:'Matching Moroccan Sets',subs:['Father & Son White Gandoura Set','Father & Son Djellaba Set']},
+    ]
+  },
+  {
+    name:'Headwear & Ghutras',
+    icon:'&#9776;',
+    sector:'accessories',
+    categories:[
+      {cat:'Shemagh',subs:['Saudi Red & White Shemagh','Saudi Plain White Shemagh','Yemeni Shemagh — Multi Pattern','Black & White Shemagh','Premium Cotton Shemagh']},
+      {cat:'Ghatra (White Headcloth)',subs:['Premium White Ghatra','Luxury Cotton Ghatra','Summer Light Ghatra','Textured Ghatra']},
+      {cat:'Ghafia & Kufi',subs:['White Ghafia','Embroidered Ghafia','Omani Kumma — White','Omani Kumma — Multicolor','Crochet Kufi','Prayer Cap — White','Prayer Cap — Black']},
+      {cat:'Egal (Headband)',subs:['Classic Black Egal','Premium Black Egal','Gold-Accent Egal','Double-Ring Egal']},
+    ]
+  },
+  {
+    name:'Shawls & Wezar',
+    icon:'&#10053;',
+    sector:'accessories',
+    categories:[
+      {cat:'Wool Shawls',subs:['Premium Wool Shawl — White','Wool Shawl — Cream','Wool Shawl — Grey','Wool Shawl — Camel','Wool Shawl — Black']},
+      {cat:'Pashmina Shawls',subs:['Pashmina — White','Pashmina — Beige','Pashmina — Navy','Pashmina — Grey','Pashmina — Brown']},
+      {cat:'Wezar (Waist Wrap)',subs:['White Cotton Wezar','Striped Wezar','Patterned Wezar','Premium Wezar']},
+    ]
+  },
+  {
+    name:'Footwear',
+    icon:'&#9884;',
+    sector:'accessories',
+    categories:[
+      {cat:'Traditional Sandals',subs:['Classic Arabic Sandal — Brown','Classic Arabic Sandal — Black','Classic Arabic Sandal — Tan','Premium Leather Sandal']},
+      {cat:'Premium Sandals',subs:['Super Collection Sandal — Black','Super Collection Sandal — Brown','Exclusive Collection Sandal — Black','Exclusive Collection Sandal — Tan']},
+      {cat:'Formal Shoes',subs:['Black Leather Formal Shoe','Brown Leather Formal Shoe','Slip-On Loafer — Black','Slip-On Loafer — Brown']},
+    ]
+  },
+  {
+    name:'Cufflinks & Accessories',
+    icon:'&#9881;',
+    sector:'accessories',
+    categories:[
+      {cat:'Cufflinks',subs:['Gold Cufflinks — Classic','Silver Cufflinks — Classic','Black & Gold Cufflinks','Mother of Pearl Cufflinks','Onyx Cufflinks','Crystal Cufflinks','Engraved Cufflinks']},
+      {cat:'Wallets',subs:['Leather Wallet — Black','Leather Wallet — Brown','Leather Wallet — Tan','Card Holder — Black','Card Holder — Brown']},
+      {cat:'Perfume & Attar',subs:['Oud Attar — Premium','Musk Attar','Rose Attar','Amber Oud','Bakhoor Collection']},
+    ]
+  },
+  {
+    name:'Women\'s Abaya Collection',
+    icon:'&#10048;',
+    sector:'women',
+    categories:[
+      {cat:'Closed Abayas',subs:['Classic Black Closed Abaya','Pleated Black Abaya','Embroidered Black Abaya','Lace Trim Abaya','Textured Black Abaya']},
+      {cat:'Butterfly Abayas',subs:['Black Butterfly Abaya','Navy Butterfly Abaya','Maroon Butterfly Abaya','Grey Butterfly Abaya']},
+      {cat:'Designer Abayas',subs:['Pearl Embellished Abaya','Kimono Style Abaya','Layered Abaya','Contrast Panel Abaya','Belted Abaya']},
+      {cat:'Scarves & Hijabs',subs:['Plain Modal Scarf','Printed Modal Scarf','Premium Jersey Hijab','Chiffon Hijab','Silk Hijab','Cotton Hijab']},
+    ]
+  },
+  {
+    name:'Custom Made & Tailoring',
+    icon:'&#9986;',
+    sector:'custom',
+    categories:[
+      {cat:'Custom Emirati Kandura',subs:['Super Custom Kandura','Exclusive Custom Kandura','Premium Custom Kandura','VIP Bespoke Kandura']},
+      {cat:'Custom Omani Dishdasha',subs:['Custom Omani — Choose Fabric','Custom Omani — Choose Embroidery','Custom Omani — Full Bespoke']},
+      {cat:'Custom Saudi Thobe',subs:['Custom Saudi — Choose Collar','Custom Saudi — Choose Fabric','Custom Saudi — Full Bespoke']},
+      {cat:'Bulk & Business Orders',subs:['Corporate Bulk Kandura Order','Wedding Party Sets','Uniform Kanduras','School Kanduras','Event Custom Orders']},
+      {cat:'Tailoring Services',subs:['Alterations & Adjustments','Custom Measurements','Fabric Selection Consultation','Express Tailoring (24-48hr)','Home Tailor Visit']},
+    ]
+  },
+  {
+    name:'Seasonal & Occasion',
+    icon:'&#9733;',
+    sector:'emirati',
+    categories:[
+      {cat:'Eid Collection',subs:['Eid Premium White Kandura','Eid Gold Embroidered Kandura','Eid Omani Special','Eid Kids Collection','Eid Bisht & Kandura Set']},
+      {cat:'Ramadan Collection',subs:['Lightweight Ramadan Kandura','Comfort Fit Ramadan Thobe','Prayer Kandura — White','Prayer Kandura — Light Colors']},
+      {cat:'Wedding & Ceremony',subs:['Groom\'s White Kandura','Groom\'s Bisht Set','Groomsmen Matching Kanduras','Wedding Guest Formal Kandura','Engagement Ceremony Kandura']},
+      {cat:'National Day',subs:['UAE Flag Color Kandura Set','National Day Premium White','National Day Kids Kandura']},
+    ]
+  },
+  {
+    name:'Fabric Shop',
+    icon:'&#9887;',
+    sector:'custom',
+    categories:[
+      {cat:'Premium Wash & Wear',subs:['White Wash & Wear — Japanese','White Wash & Wear — Korean','White Wash & Wear — English','Colored Wash & Wear Fabric']},
+      {cat:'Cotton Fabrics',subs:['Pure Cotton — White','Pure Cotton — Colors','Blended Cotton — White','Blended Cotton — Colors','Organic Cotton']},
+      {cat:'Luxury Fabrics',subs:['Japanese Cotton','Royale Fabric','Silk-Blend Fabric','Linen Fabric','Waterproof Finish Fabric']},
+      {cat:'Lining & Trims',subs:['Collar Lining Fabric','Cuff Lining Material','Embroidery Thread — Gold','Embroidery Thread — Silver','Button Sets']},
+    ]
+  },
+];
+
+/* ---------- render ---------- */
+const grid    = document.getElementById('brandGrid');
+const search  = document.getElementById('searchInput');
+const tabs    = document.getElementById('filterTabs');
+const expandBtn = document.getElementById('expandAll');
+let activeSector = 'all';
+let expanded = false;
+
+function render(query=''){
+  const q = query.toLowerCase();
+  grid.innerHTML = '';
+  let shown = 0, totalCats = 0, totalProds = 0;
+
+  collections.forEach(c => {
+    if(activeSector !== 'all' && c.sector !== activeSector) return;
+
+    const matchColl = c.name.toLowerCase().includes(q);
+    const filteredCats = c.categories.map(cat => {
+      const filteredSubs = cat.subs.filter(s => s.toLowerCase().includes(q) || matchColl || cat.cat.toLowerCase().includes(q));
+      return {...cat, subs: filteredSubs};
+    }).filter(cat => cat.subs.length > 0);
+
+    if(filteredCats.length === 0) return;
+
+    shown++;
+    const catCount = filteredCats.length;
+    const prodCount = filteredCats.reduce((a, c) => a + c.subs.length, 0);
+    totalCats += catCount;
+    totalProds += prodCount;
+
+    const card = document.createElement('div');
+    card.className = 'brand-card' + (expanded ? ' open' : '');
+    card.innerHTML = `
+      <div class="brand-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="brand-left">
+          <div class="brand-icon">${c.icon}</div>
+          <div class="brand-info">
+            <div class="brand-name">${c.name}</div>
+            <div class="brand-meta">
+              <span>${catCount} categories</span>
+              <span>${prodCount} products</span>
+              <span class="sector-tag sector-${c.sector}">${c.sector}</span>
+            </div>
+          </div>
+        </div>
+        <span class="chevron">&#9662;</span>
+      </div>
+      <div class="brand-body">
+        ${filteredCats.map(cat => `
+          <div class="cat-block">
+            <div class="cat-title">${cat.cat}</div>
+            <div class="sub-grid">
+              ${cat.subs.map(s => `<span class="sub-pill">${s}</span>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  if(shown === 0){
+    grid.innerHTML = '<div class="no-results"><div class="no-results-icon">&#9775;</div>No collections match your search</div>';
+  }
+
+  document.getElementById('visibleCount').textContent = shown + ' collection' + (shown !== 1 ? 's' : '') + ' shown';
+  document.getElementById('totalColl').textContent = shown;
+  document.getElementById('totalCats').textContent = totalCats;
+  document.getElementById('totalProds').textContent = totalProds;
+}
+
+search.addEventListener('input', () => render(search.value));
+
+tabs.addEventListener('click', e => {
+  if(!e.target.classList.contains('tab')) return;
+  tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  e.target.classList.add('active');
+  activeSector = e.target.dataset.sector;
+  render(search.value);
+});
+
+expandBtn.addEventListener('click', () => {
+  expanded = !expanded;
+  expandBtn.textContent = expanded ? 'Collapse All' : 'Expand All';
+  document.querySelectorAll('.brand-card').forEach(c => {
+    expanded ? c.classList.add('open') : c.classList.remove('open');
+  });
+});
+
+render();
+</script>
+</body>
+</html>
