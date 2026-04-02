@@ -115,11 +115,11 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-gold/10">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-          <p className="text-cream/30 text-xs tracking-wider">
+          <p className="text-cream/70 text-xs tracking-wider">
             &copy; {new Date().getFullYear()} Al Rams Gate Trading (Mohd. Chowdhry Trading). All rights reserved. | Powered by{" "}
-            <a href="https://zetacoding.com/" target="_blank" rel="noopener noreferrer" className="text-gold/50 hover:text-gold transition-colors duration-300">ZetaCoding</a>
+            <a href="https://zetacoding.com/" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors duration-300">ZetaCoding</a>
           </p>
-          <p className="text-cream/20 text-xs">
+          <p className="text-cream/50 text-xs">
             Naif Souq, Deira, Dubai - UAE
           </p>
         </div>

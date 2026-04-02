@@ -107,7 +107,7 @@ export default function Contact() {
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-8"
+            className="space-y-8 lg:mt-8"
           >
             {/* Info Cards */}
             <div className="bg-navy p-5 sm:p-6 md:p-8 text-cream">
