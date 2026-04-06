@@ -2,10 +2,14 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLang } from "../context/LanguageContext";
+import { t } from "../translations";
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { lang, n } = useLang();
+  const tr = t(lang).contact;
 
   return (
     <section id="contact" className="section-padding bg-cream relative overflow-hidden" ref={ref}>
@@ -17,14 +21,13 @@ export default function Contact() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-gold-dark text-sm tracking-[0.3em] uppercase">Get In Touch</span>
+          <span className="text-gold-dark text-sm tracking-[0.3em] uppercase">{tr.label}</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy mt-3 mb-6">
-            Contact Us
+            {tr.title}
           </h2>
           <div className="gold-line max-w-xs mx-auto mb-8" />
           <p className="text-gray-500 max-w-2xl mx-auto text-lg">
-            Have questions about our kanduras? Want to place a bulk order or learn about
-            our manufacturing capabilities? We&apos;d love to hear from you.
+            {tr.description}
           </p>
         </motion.div>
 
@@ -39,55 +42,55 @@ export default function Contact() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-navy mb-2 tracking-wider uppercase">
-                    Name
+                    {tr.name}
                   </label>
                   <input
                     type="text"
-                    placeholder="Your Name"
+                    placeholder={tr.namePlaceholder}
                     className="w-full px-4 py-3 bg-white border border-gray-200 text-navy placeholder:text-gray-400 focus:outline-none focus:border-gold transition-colors duration-300"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-navy mb-2 tracking-wider uppercase">
-                    Phone
+                    {tr.phone}
                   </label>
                   <input
                     type="tel"
-                    placeholder="+971 XX XXX XXXX"
+                    placeholder={tr.phonePlaceholder}
                     className="w-full px-4 py-3 bg-white border border-gray-200 text-navy placeholder:text-gray-400 focus:outline-none focus:border-gold transition-colors duration-300"
                   />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-navy mb-2 tracking-wider uppercase">
-                  Email
+                  {tr.email}
                 </label>
                 <input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder={tr.emailPlaceholder}
                   className="w-full px-4 py-3 bg-white border border-gray-200 text-navy placeholder:text-gray-400 focus:outline-none focus:border-gold transition-colors duration-300"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-navy mb-2 tracking-wider uppercase">
-                  Subject
+                  {tr.subject}
                 </label>
                 <select className="w-full px-4 py-3 bg-white border border-gray-200 text-navy focus:outline-none focus:border-gold transition-colors duration-300">
-                  <option value="">Select a subject</option>
-                  <option value="retail">Retail Inquiry</option>
-                  <option value="bulk">Bulk / Wholesale Order</option>
-                  <option value="custom">Custom Manufacturing</option>
-                  <option value="partnership">Business Partnership</option>
-                  <option value="other">Other</option>
+                  <option value="">{tr.selectSubject}</option>
+                  <option value="retail">{tr.retailInquiry}</option>
+                  <option value="bulk">{tr.bulkOrder}</option>
+                  <option value="custom">{tr.customManufacturing}</option>
+                  <option value="partnership">{tr.businessPartnership}</option>
+                  <option value="other">{tr.other}</option>
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-navy mb-2 tracking-wider uppercase">
-                  Message
+                  {tr.message}
                 </label>
                 <textarea
                   rows={5}
-                  placeholder="Tell us about your requirements..."
+                  placeholder={tr.messagePlaceholder}
                   className="w-full px-4 py-3 bg-white border border-gray-200 text-navy placeholder:text-gray-400 focus:outline-none focus:border-gold transition-colors duration-300 resize-none"
                 />
               </div>
@@ -97,7 +100,7 @@ export default function Contact() {
                 type="submit"
                 className="w-full bg-navy text-cream py-4 text-sm font-bold tracking-[0.2em] uppercase hover:bg-navy-light transition-all duration-300"
               >
-                Send Message
+                {tr.sendMessage}
               </motion.button>
             </form>
           </motion.div>
@@ -111,7 +114,7 @@ export default function Contact() {
           >
             {/* Info Cards */}
             <div className="bg-navy p-5 sm:p-6 md:p-8 text-cream">
-              <h3 className="text-xl font-bold text-gold mb-6">Quick Contact</h3>
+              <h3 className="text-xl font-bold text-gold mb-6">{tr.quickContact}</h3>
 
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
@@ -122,10 +125,10 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gold-light text-sm mb-1">Address</h4>
+                    <h4 className="font-semibold text-gold-light text-sm mb-1">{tr.address}</h4>
                     <p className="text-cream/70 text-sm leading-relaxed">
-                      P.O. Box: 64765, Opposite Naif Souq,<br />
-                      Gate No 3 &amp; 4, Deira, Dubai - UAE
+                      {tr.addressText}<br />
+                      {tr.addressText2}
                     </p>
                   </div>
                 </div>
@@ -139,18 +142,18 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gold-light text-sm mb-1">Phone</h4>
+                    <h4 className="font-semibold text-gold-light text-sm mb-1">{tr.phone}</h4>
                     <p className="text-cream/70 text-sm">
                       <a href="tel:+971547354830" className="hover:text-gold transition-colors">
-                        +971 54 735 4830
+                        {n("+971 54 735 4830")}
                       </a>{" "}
-                      (Md Selim)
+                      ({tr.contactPerson1})
                     </p>
                     <p className="text-cream/70 text-sm">
                       <a href="tel:+971569202644" className="hover:text-gold transition-colors">
-                        +971 56 920 2644
+                        {n("+971 56 920 2644")}
                       </a>{" "}
-                      (Md Sumon)
+                      ({tr.contactPerson2})
                     </p>
                   </div>
                 </div>
@@ -164,9 +167,9 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gold-light text-sm mb-1">Working Hours</h4>
-                    <p className="text-cream/70 text-sm">Saturday - Thursday: 9:00 AM - 10:00 PM</p>
-                    <p className="text-cream/70 text-sm">Friday: 2:00 PM - 10:00 PM</p>
+                    <h4 className="font-semibold text-gold-light text-sm mb-1">{tr.workingHours}</h4>
+                    <p className="text-cream/70 text-sm">{tr.satThurs}</p>
+                    <p className="text-cream/70 text-sm">{tr.friday}</p>
                   </div>
                 </div>
               </div>
@@ -185,8 +188,8 @@ export default function Contact() {
                 </svg>
               </div>
               <div>
-                <p className="font-bold text-base sm:text-lg">Chat on WhatsApp</p>
-                <p className="text-white/80 text-sm">Quick responses, easy ordering</p>
+                <p className="font-bold text-base sm:text-lg">{tr.chatWhatsapp}</p>
+                <p className="text-white/80 text-sm">{tr.quickResponses}</p>
               </div>
               <svg
                 className="w-5 h-5 ml-auto transform group-hover:translate-x-1 transition-transform"

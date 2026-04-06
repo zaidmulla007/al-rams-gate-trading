@@ -1,8 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "../context/LanguageContext";
+import { t } from "../translations";
 
 export default function Hero() {
+  const { lang, n } = useLang();
+  const tr = t(lang).hero;
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-navy pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20">
       {/* Subtle grid background */}
@@ -200,7 +204,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.4 }}
           className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-cream mb-4 tracking-tight leading-tight"
         >
-          AL RAMS GATE
+          {tr.title}
         </motion.h1>
 
         <motion.h2
@@ -209,7 +213,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.6 }}
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gradient-gold mb-8 tracking-wide"
         >
-          TRADING
+          {tr.subtitle}
         </motion.h2>
 
         {/* Gold Divider */}
@@ -227,7 +231,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 1 }}
           className="text-xl sm:text-2xl md:text-3xl text-cream/90 font-light italic mb-6"
         >
-          Best Wearings For Men
+          {tr.tagline}
         </motion.p>
 
         {/* Manufacture + Sales Badge */}
@@ -241,14 +245,14 @@ export default function Hero() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
             </svg>
-            We Manufacture
+            {tr.weManufacture}
           </span>
           <span className="text-gold text-xl">+</span>
           <span className="flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold px-4 py-2 text-xs sm:text-sm tracking-wider uppercase">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
-            We Sell
+            {tr.weSell}
           </span>
         </motion.div>
 
@@ -258,9 +262,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 1.3 }}
           className="text-sm sm:text-base md:text-lg text-cream/60 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-2"
         >
-          From our own factory floor to your hands &mdash; we manufacture and sell premium
-          kanduras directly, ensuring the finest quality at the best prices. Located in the
-          heart of Naif Souq, Dubai.
+          {tr.description}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -274,14 +276,14 @@ export default function Hero() {
             href="#collections"
             className="group relative bg-gold text-navy-dark px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-sm font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-gold/20 w-full sm:w-auto text-center"
           >
-            <span className="relative z-10">Explore Collections</span>
+            <span className="relative z-10">{tr.exploreCollections}</span>
             <div className="absolute inset-0 bg-gold-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
           </a>
           <a
             href="#contact"
             className="border border-gold/40 text-gold px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-sm font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase hover:bg-gold/10 transition-all duration-300 hover:border-gold w-full sm:w-auto text-center"
           >
-            Contact Us
+            {tr.contactUs}
           </a>
         </motion.div>
 
@@ -293,9 +295,9 @@ export default function Hero() {
           className="mt-12 sm:mt-16 md:mt-20 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto"
         >
           {[
-            { number: "2", label: "Retail Stores" },
-            { number: "Own", label: "Manufacturing" },
-            { number: "1000+", label: "Happy Clients" },
+            { number: n("2"), label: tr.retailStores },
+            { number: lang === "ar" ? "خاص" : "Own", label: tr.manufacturing },
+            { number: n("1000") + "+", label: tr.happyClients },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-gold">{stat.number}</div>

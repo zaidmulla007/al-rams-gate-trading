@@ -2,49 +2,19 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const steps = [
-  {
-    step: "01",
-    title: "Fabric Selection",
-    description:
-      "We source only the finest lightweight cottons and premium wash-and-wear fabrics from trusted suppliers, ensuring comfort in the Gulf's warm climate.",
-  },
-  {
-    step: "02",
-    title: "Precision Cutting",
-    description:
-      "Every piece is measured and cut with meticulous accuracy, following traditional patterns refined over generations of craftsmanship.",
-  },
-  {
-    step: "03",
-    title: "Expert Stitching",
-    description:
-      "Our master tailors bring decades of experience to every seam, combining hand-finishing techniques with modern precision for a flawless result.",
-  },
-  {
-    step: "04",
-    title: "Embroidery & Details",
-    description:
-      "From Omani collar embroidery to Saudi decorative stitching, each design element is carefully applied to honor regional traditions.",
-  },
-  {
-    step: "05",
-    title: "Quality Inspection",
-    description:
-      "Every kandura undergoes rigorous quality checks before reaching our stores, ensuring only the finest garments bear our name.",
-  },
-  {
-    step: "06",
-    title: "Ready to Wear",
-    description:
-      "Perfectly pressed and presented, each kandura is ready to make its wearer feel confident, comfortable, and connected to tradition.",
-  },
-];
+import { useLang } from "../context/LanguageContext";
+import { t } from "../translations";
 
 export default function Craftsmanship() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { lang, n } = useLang();
+  const tr = t(lang).craftsmanship;
+
+  const steps = tr.steps.map((step, i) => ({
+    step: n(String(i + 1).padStart(2, "0")),
+    ...step,
+  }));
 
   return (
     <section id="craftsmanship" className="section-padding bg-cream relative overflow-hidden" ref={ref}>
@@ -56,14 +26,13 @@ export default function Craftsmanship() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <span className="text-gold-dark text-sm tracking-[0.3em] uppercase">The Process</span>
+          <span className="text-gold-dark text-sm tracking-[0.3em] uppercase">{tr.label}</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy mt-3 mb-6">
-            Our Craftsmanship
+            {tr.title}
           </h2>
           <div className="gold-line max-w-xs mx-auto mb-8" />
           <p className="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-2">
-            From raw fabric to finished garment, every step of our manufacturing process
-            reflects our dedication to quality and tradition.
+            {tr.description}
           </p>
         </motion.div>
 
@@ -88,7 +57,7 @@ export default function Craftsmanship() {
 
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-sm font-bold text-gold tracking-wider">STEP {item.step}</span>
+                  <span className="text-sm font-bold text-gold tracking-wider">{item.step}</span>
                   <div className="flex-1 h-[1px] bg-gold/20" />
                 </div>
                 <h3 className="text-xl font-bold text-navy mb-3 group-hover:text-gold-dark transition-colors duration-300">
@@ -123,17 +92,16 @@ export default function Craftsmanship() {
           </div>
           <div className="relative z-10">
             <h3 className="text-2xl sm:text-3xl font-bold text-cream mb-4">
-              Both Manufacturing &amp; Retail Under One Roof
+              {tr.bannerTitle}
             </h3>
             <p className="text-cream/60 max-w-xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base px-2">
-              As both manufacturers and retailers, we cut out the middleman to bring you
-              the finest kanduras at the best prices. Quality guaranteed from factory to store.
+              {tr.bannerDesc}
             </p>
             <a
               href="#stores"
               className="inline-flex items-center gap-2 bg-gold text-navy-dark px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase hover:bg-gold-light transition-all duration-300"
             >
-              Visit Our Stores
+              {tr.visitStores}
             </a>
           </div>
         </motion.div>

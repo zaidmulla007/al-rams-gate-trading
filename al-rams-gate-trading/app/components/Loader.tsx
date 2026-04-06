@@ -2,9 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "../context/LanguageContext";
+import { t } from "../translations";
 
 export default function Loader() {
   const [isLoading, setIsLoading] = useState(true);
+  const { lang } = useLang();
+  const tr = t(lang).nav;
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2400);
@@ -73,7 +77,7 @@ export default function Loader() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
               >
-                Al Rams Gate
+                {tr.brand}
               </motion.h2>
               <motion.div
                 className="h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent mt-3 mb-3"
@@ -87,7 +91,7 @@ export default function Loader() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7, duration: 0.6 }}
               >
-                Trading
+                {tr.trading}
               </motion.p>
             </div>
 

@@ -2,50 +2,54 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const processFlow = [
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-      </svg>
-    ),
-    title: "We Source",
-    description: "Premium fabrics sourced from the finest textile mills",
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    title: "We Manufacture",
-    description: "Expert tailors craft every piece in our own facility",
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: "We Inspect",
-    description: "Rigorous quality checks ensure every kandura is flawless",
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-      </svg>
-    ),
-    title: "We Sell",
-    description: "Directly to you from our stores in Naif Souq, Dubai",
-  },
-];
+import { useLang } from "../context/LanguageContext";
+import { t } from "../translations";
 
 export default function ManufactureAndSales() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { lang, n } = useLang();
+  const tr = t(lang).manufacture;
+
+  const processFlow = [
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+      ),
+      title: tr.weSource,
+      description: tr.weSourceDesc,
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      title: tr.weManufacture,
+      description: tr.weManufactureDesc,
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: tr.weInspect,
+      description: tr.weInspectDesc,
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+      ),
+      title: tr.weSell,
+      description: tr.weSellDesc,
+    },
+  ];
 
   return (
     <section className="section-padding bg-navy relative overflow-hidden" ref={ref}>
@@ -69,17 +73,14 @@ export default function ManufactureAndSales() {
           className="text-center mb-16"
         >
           <span className="text-gold text-sm tracking-[0.3em] uppercase">
-            Factory to Store
+            {tr.label}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-cream mt-3 mb-6">
-            We Manufacture &amp; We Sell
+            {tr.title}
           </h2>
           <div className="gold-line max-w-xs mx-auto mb-8" />
           <p className="text-cream/60 max-w-3xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed px-2">
-            Unlike most retailers, we don&apos;t just sell kanduras &mdash; we make them.
-            Every kandura you see in our stores is designed, cut, stitched, and finished by
-            our own skilled craftsmen. This means you get superior quality, custom options,
-            and factory-direct prices with no middlemen involved.
+            {tr.description}
           </p>
         </motion.div>
 
@@ -102,25 +103,15 @@ export default function ManufactureAndSales() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gold">Manufacturing</h3>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gold">{tr.manufacturingTitle}</h3>
             </div>
             <ul className="space-y-3 sm:space-y-4 text-cream/70 text-sm sm:text-base">
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Own in-house production facility with expert tailors</span>
-              </li>
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Full control over quality from fabric to final stitch</span>
-              </li>
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Custom orders &amp; bulk manufacturing for businesses</span>
-              </li>
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Emirati, Omani &amp; Saudi styles crafted authentically</span>
-              </li>
+              {tr.mfgPoints.map((point: string, i: number) => (
+                <li key={i} className="flex items-start gap-2 sm:gap-3">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
+                  <span>{point}</span>
+                </li>
+              ))}
             </ul>
           </motion.div>
 
@@ -140,25 +131,15 @@ export default function ManufactureAndSales() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gold">Retail Sales</h3>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gold">{tr.salesTitle}</h3>
             </div>
             <ul className="space-y-3 sm:space-y-4 text-cream/70 text-sm sm:text-base">
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Two retail stores in the iconic Naif Souq, Dubai</span>
-              </li>
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Factory-direct prices &mdash; no middlemen, no markups</span>
-              </li>
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Ready-to-wear &amp; made-to-measure options available</span>
-              </li>
-              <li className="flex items-start gap-2 sm:gap-3">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
-                <span>Collections for men &amp; children for every occasion</span>
-              </li>
+              {tr.salesPoints.map((point: string, i: number) => (
+                <li key={i} className="flex items-start gap-2 sm:gap-3">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rotate-45 mt-2 flex-shrink-0" />
+                  <span>{point}</span>
+                </li>
+              ))}
             </ul>
           </motion.div>
         </div>
@@ -180,7 +161,7 @@ export default function ManufactureAndSales() {
             >
               {/* Step number */}
               <div className="absolute top-2 right-3 text-xs text-gold/30 font-bold">
-                {String(i + 1).padStart(2, "0")}
+                {n(String(i + 1).padStart(2, "0"))}
               </div>
               <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-2 sm:mb-4 bg-gold/10 rounded-full flex items-center justify-center text-gold">
                 {item.icon}
@@ -208,7 +189,7 @@ export default function ManufactureAndSales() {
           transition={{ duration: 0.8, delay: 1.2 }}
           className="text-center text-gold/60 text-sm tracking-wider uppercase mt-10"
         >
-          From Our Factory &rarr; To Our Store &rarr; To You &mdash; No Middlemen
+          {tr.tagline}
         </motion.p>
       </div>
     </section>

@@ -2,26 +2,24 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-
-const quickLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Collections", href: "#collections" },
-  { name: "Craftsmanship", href: "#craftsmanship" },
-  { name: "Stores", href: "#stores" },
-  { name: "Contact", href: "#contact" },
-];
-
-const collections = [
-  "Emirati Kandura",
-  "Omani Kandura",
-  "Saudi Kandura",
-  "Kids Collection",
-  "Custom Orders",
-  "Bulk / Wholesale",
-];
+import { useLang } from "../context/LanguageContext";
+import { t } from "../translations";
 
 export default function Footer() {
+  const { lang, n } = useLang();
+  const tr = t(lang).footer;
+  const navTr = t(lang).nav;
+
+  const quickLinks = [
+    { name: navTr.home, href: "#home" },
+    { name: navTr.about, href: "#about" },
+    { name: navTr.collections, href: "#collections" },
+    { name: navTr.craftsmanship, href: "#craftsmanship" },
+    { name: navTr.stores, href: "#stores" },
+    { name: navTr.contact, href: "#contact" },
+  ];
+
+  const collections = tr.collectionsList;
   return (
     <footer className="bg-navy-dark text-cream relative overflow-hidden">
       {/* Top Gold Line */}
@@ -32,19 +30,18 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="text-2xl font-bold text-gradient-gold mb-2">AL RAMS GATE</h3>
-            <p className="text-xs tracking-[0.3em] text-gold/60 uppercase mb-4">Trading</p>
+            <h3 className="text-2xl font-bold text-gradient-gold mb-2">{tr.brand}</h3>
+            <p className="text-xs tracking-[0.3em] text-gold/60 uppercase mb-4">{tr.trading}</p>
             <p className="text-cream/50 text-sm leading-relaxed mb-6">
-              Premium kandura manufacturing &amp; sales. Crafting elegance and tradition
-              for the modern gentleman.
+              {tr.brandDesc}
             </p>
-            <p className="text-gold/80 italic text-sm">&ldquo;Best Wearings For Men&rdquo;</p>
+            <p className="text-gold/80 italic text-sm">{tr.bestWearings}</p>
           </div>
 
           {/* Quick Links */}
           <div>
             <h4 className="text-gold font-semibold tracking-wider uppercase text-sm mb-6">
-              Quick Links
+              {tr.quickLinks}
             </h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
@@ -64,7 +61,7 @@ export default function Footer() {
           {/* Collections */}
           <div>
             <h4 className="text-gold font-semibold tracking-wider uppercase text-sm mb-6">
-              Collections
+              {tr.collections}
             </h4>
             <ul className="space-y-3">
               {collections.map((item) => (
@@ -81,7 +78,7 @@ export default function Footer() {
           {/* Contact Info */}
           <div>
             <h4 className="text-gold font-semibold tracking-wider uppercase text-sm mb-6">
-              Contact
+              {tr.contact}
             </h4>
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
@@ -90,8 +87,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <p className="text-cream/50">
-                  P.O. Box: 64765, Opposite Naif Souq,
-                  Gate No 3 &amp; 4, Deira, Dubai - UAE
+                  {tr.location}
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -100,10 +96,10 @@ export default function Footer() {
                 </svg>
                 <div>
                   <a href="tel:+971547354830" className="text-cream/50 hover:text-gold transition-colors block">
-                    +971 54 735 4830
+                    {n("+971 54 735 4830")}
                   </a>
                   <a href="tel:+971569202644" className="text-cream/50 hover:text-gold transition-colors block">
-                    +971 56 920 2644
+                    {n("+971 56 920 2644")}
                   </a>
                 </div>
               </div>
@@ -116,11 +112,11 @@ export default function Footer() {
       <div className="border-t border-gold/10">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
           <p className="text-cream/70 text-xs tracking-wider">
-            &copy; {new Date().getFullYear()} Al Rams Gate Trading (Mohd. Chowdhry Trading). All rights reserved. | Powered by{" "}
+            &copy; {n(new Date().getFullYear())} {tr.copyright} | {tr.poweredBy}{" "}
             <a href="https://zetacoding.com/" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors duration-300">ZetaCoding</a>
           </p>
           <p className="text-cream/50 text-xs">
-            Naif Souq, Deira, Dubai - UAE
+            {tr.location}
           </p>
         </div>
       </div>

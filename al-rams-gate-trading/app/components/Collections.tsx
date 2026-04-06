@@ -3,6 +3,8 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { useLang } from "../context/LanguageContext";
+import { t } from "../translations";
 
 const collections = [
   {
@@ -61,6 +63,22 @@ export default function Collections() {
   const [activeCollection, setActiveCollection] = useState("emirati");
   const [featuredIdx, setFeaturedIdx] = useState(0);
 
+  const { lang, n } = useLang();
+  const tr = t(lang).collections;
+
+  const getCollectionText = (id: string) => {
+    const collectionTexts = {
+      emirati: { name: tr.emirati, description: tr.emiratiDesc, features: tr.emiratiFeatures },
+      omani: { name: tr.omani, description: tr.omaniDesc, features: tr.omaniFeatures },
+      saudi: { name: tr.saudi, description: tr.saudiDesc, features: tr.saudiFeatures },
+      moroccan: { name: tr.moroccan, description: tr.moroccanDesc, features: tr.moroccanFeatures },
+      kids: { name: tr.kids, description: tr.kidsDesc, features: tr.kidsFeatures },
+      accessories: { name: tr.accessories, description: tr.accessoriesDesc, features: tr.accessoriesFeatures },
+    };
+    const key = id as keyof typeof collectionTexts;
+    return collectionTexts[key];
+  };
+
   const active = collections.find((c) => c.id === activeCollection) || collections[0];
 
   const handleCollectionChange = (id: string) => {
@@ -89,14 +107,13 @@ export default function Collections() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-gold text-sm tracking-[0.3em] uppercase">Our Collections</span>
+          <span className="text-gold text-sm tracking-[0.3em] uppercase">{tr.label}</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-cream mt-3 mb-6">
-            Premium Kandura Styles
+            {tr.title}
           </h2>
           <div className="gold-line max-w-xs mx-auto mb-8" />
           <p className="text-cream/60 max-w-2xl mx-auto text-lg">
-            Explore our curated range of traditional kanduras, each representing the finest
-            craftsmanship from across the Gulf region.
+            {tr.description}
           </p>
         </motion.div>
 
@@ -117,7 +134,7 @@ export default function Collections() {
                   : "border border-gold/30 text-gold/70 hover:border-gold hover:text-gold"
               }`}
             >
-              {col.name}
+              {getCollectionText(col.id).name}
             </button>
           ))}
         </motion.div>
@@ -147,7 +164,7 @@ export default function Collections() {
                   >
                     <Image
                       src={active.images[featuredIdx]}
-                      alt={`${active.name} - Style ${featuredIdx + 1}`}
+                      alt={`${getCollectionText(active.id).name} - Style ${featuredIdx + 1}`}
                       fill
                       className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 50vw"
@@ -161,7 +178,7 @@ export default function Collections() {
                 <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-gold/40" />
                 {/* Image counter */}
                 <div className="absolute bottom-4 left-4 bg-navy/70 backdrop-blur-sm px-3 py-1 text-xs text-gold tracking-wider">
-                  {String(featuredIdx + 1).padStart(2, "0")} / {String(active.images.length).padStart(2, "0")}
+                  {n(String(featuredIdx + 1).padStart(2, "0"))} / {n(String(active.images.length).padStart(2, "0"))}
                 </div>
               </div>
 
@@ -180,7 +197,7 @@ export default function Collections() {
                   >
                     <Image
                       src={img}
-                      alt={`${active.name} thumbnail ${i + 1}`}
+                      alt={`${getCollectionText(active.id).name} thumbnail ${i + 1}`}
                       fill
                       className="object-cover"
                       sizes="100px"
@@ -198,16 +215,16 @@ export default function Collections() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <span className="text-gold text-xs tracking-[0.3em] uppercase">
-                  {active.images.length} Styles Available
+                  {n(active.images.length)} {tr.stylesAvailable}
                 </span>
-                <h3 className="text-3xl sm:text-4xl font-bold text-cream mt-2 mb-6">{active.name}</h3>
+                <h3 className="text-3xl sm:text-4xl font-bold text-cream mt-2 mb-6">{getCollectionText(active.id).name}</h3>
                 <p className="text-cream/70 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-8">
-                  {active.description}
+                  {getCollectionText(active.id).description}
                 </p>
 
                 {/* Features Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-10">
-                  {active.features.map((feature, i) => (
+                  {getCollectionText(active.id).features.map((feature, i) => (
                     <motion.div
                       key={feature}
                       initial={{ opacity: 0, x: -20 }}
@@ -239,14 +256,14 @@ export default function Collections() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
-                  <span className="text-cream/40 text-xs tracking-wider uppercase ml-2">Browse Styles</span>
+                  <span className="text-cream/40 text-xs tracking-wider uppercase ml-2">{tr.browseStyles}</span>
                 </div>
 
                 <a
                   href="#contact"
                   className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-gold text-navy-dark px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-sm font-bold tracking-[0.15em] uppercase hover:bg-gold-light transition-all duration-300 group w-full sm:w-auto"
                 >
-                  Inquire Now
+                  {tr.inquireNow}
                   <svg
                     className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
                     fill="none"
@@ -283,7 +300,7 @@ export default function Collections() {
               <div className="relative aspect-square overflow-hidden">
                 <Image
                   src={col.images[0]}
-                  alt={col.name}
+                  alt={getCollectionText(col.id).name}
                   fill
                   className="object-cover transition-transform duration-500 hover:scale-110"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 16vw"
@@ -291,8 +308,8 @@ export default function Collections() {
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
               </div>
               <div className="p-3 text-center">
-                <h4 className="text-cream font-semibold text-xs sm:text-sm mb-0.5">{col.name}</h4>
-                <p className="text-cream/40 text-[10px] sm:text-xs">{col.images.length} Styles</p>
+                <h4 className="text-cream font-semibold text-xs sm:text-sm mb-0.5">{getCollectionText(col.id).name}</h4>
+                <p className="text-cream/40 text-[10px] sm:text-xs">{n(col.images.length)} {tr.styles}</p>
               </div>
             </motion.div>
           ))}
